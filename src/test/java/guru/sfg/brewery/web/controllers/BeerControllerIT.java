@@ -74,4 +74,20 @@ public class BeerControllerIT {
                 .andExpect(model().attributeExists("beer"));
     }
 
+    @Test
+    void initCreationForm() throws Exception {
+        mockMvc.perform(get("/beers/new").with(httpBasic("spring", "guru")))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("beers/createBeer"))
+                .andExpect(model().attributeExists("beer"));
+    }
+
+    @Test
+    void initCreationForm2() throws Exception {
+        mockMvc.perform(get("/beers/new").with(httpBasic("scott", "tiger")))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("beers/createBeer"))
+                .andExpect(model().attributeExists("beer"));
+    }
+
 }
