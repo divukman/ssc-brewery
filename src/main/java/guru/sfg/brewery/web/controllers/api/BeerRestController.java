@@ -117,6 +117,8 @@ public class BeerRestController {
         beerService.deleteById(beerId);
     }
 
+
+
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     ResponseEntity<List> badReqeustHandler(ConstraintViolationException e){
