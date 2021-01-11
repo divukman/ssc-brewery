@@ -48,14 +48,13 @@ public class DefaultBreweryLoader implements CommandLineRunner {
     private final BeerInventoryRepository beerInventoryRepository;
     private final BeerOrderRepository beerOrderRepository;
     private final CustomerRepository customerRepository;
-    private final AuthorityRepository authorityRepository;
-    private final UserRepository userRepository;
+
 
     @Override
     public void run(String... args) {
         loadBreweryData();
         loadCustomerData();
-        loadAuthoritiesAndUsers();
+
     }
 
     private void loadCustomerData() {
@@ -130,37 +129,5 @@ public class DefaultBreweryLoader implements CommandLineRunner {
         }
     }
 
-    private void loadAuthoritiesAndUsers() {
-        if (authorityRepository.findAll().isEmpty()) {
-            final Authority adminAuthority = Authority.builder().role("ADMIN").build();
-            final Authority userAuthority = Authority.builder().role("USER").build();
-            final Authority customerAuthority = Authority.builder().role("CUSTOMER").build();
 
-            authorityRepository.save(adminAuthority);
-            authorityRepository.save(userAuthority);
-            authorityRepository.save(customerAuthority);
-
-            final User springUser = User.builder()
-                    .username("spring")
-                    .password("{bcrypt}$2a$10$cbcOXvctYzE2lPdgnoSfluKD2gnxhivwNQsj55S8D/xba.iZvf/22")
-                    .authority(adminAuthority)
-                    .build();
-
-            final User regularUser = User.builder()
-                    .username("user")
-                    .password("{sha256}74e173cf2f0b6b3bb8fad83f2f7ec87e5349e486278a7810fb88e4f28ccbfa6b5956ce50821b6771")
-                    .authority(userAuthority)
-                    .build();
-
-            final User scottUser = User.builder()
-                    .username("scott")
-                    .password("{bcrypt10}$2a$10$q5egRLf4Nl3O0p7oQIWQkeEfeJ0Swn8/aPFTs.KwaJvaLIRFof4hm")
-                    .authority(customerAuthority)
-                    .build();
-
-            userRepository.save(springUser);
-            userRepository.save(regularUser);
-            userRepository.save(scottUser);
-        }
-    }
 }
