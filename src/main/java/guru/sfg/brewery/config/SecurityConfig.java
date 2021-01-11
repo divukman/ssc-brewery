@@ -47,12 +47,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable();
+        http.headers().frameOptions().disable();
 
         http.addFilterBefore(restHeaderAuthFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(urlParameterAuthFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
 
         http
-                .authorizeRequests( authorize -> authorize.antMatchers("/", "/webjars/**", "/login", "/resources/**").permitAll())
+                .authorizeRequests( authorize -> authorize.antMatchers("/", "/webjars/**", "/login", "/resources/**", "/h2-console/**").permitAll())
                 .authorizeRequests(
                         authorize -> authorize
                                 .antMatchers("/beers/find", "/beers*").permitAll()
