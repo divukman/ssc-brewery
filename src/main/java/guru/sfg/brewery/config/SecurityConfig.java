@@ -85,9 +85,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new InMemoryUserDetailsManager(admin, user);
     }*/
 
-    @Override
+  /*  @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-       auth.inMemoryAuthentication()
+     *//*  auth.inMemoryAuthentication()
                .withUser("spring")
                //
                //.password("guru")
@@ -105,8 +105,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                //.password("tiger")
                //.password("{ldap}{SSHA}o2Ziug2k2blgZwHuLVSeTlrjscuvHzRuUf5Zww==")
                .password("{bcrypt10}$2a$10$q5egRLf4Nl3O0p7oQIWQkeEfeJ0Swn8/aPFTs.KwaJvaLIRFof4hm")
-               .roles("CUSTOMER");
-    }
+               .roles("CUSTOMER");*//*
+    }*/
 
     @Bean
     public PasswordEncoder passwordEncoder () {

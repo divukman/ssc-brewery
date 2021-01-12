@@ -15,7 +15,7 @@ public class UserDataLoader implements CommandLineRunner {
 
     private final AuthorityRepository authorityRepository;
     private final UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
