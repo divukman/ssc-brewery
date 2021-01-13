@@ -24,9 +24,9 @@ public class UserDataLoader implements CommandLineRunner {
 
     private void loadAuthoritiesAndUsers() {
         if (authorityRepository.findAll().isEmpty()) {
-            final Authority adminAuthority = Authority.builder().role("ADMIN").build();
-            final Authority userAuthority = Authority.builder().role("USER").build();
-            final Authority customerAuthority = Authority.builder().role("CUSTOMER").build();
+            final Authority adminAuthority = Authority.builder().role("ROLE_ADMIN").build();
+            final Authority userAuthority = Authority.builder().role("ROLE_USER").build();
+            final Authority customerAuthority = Authority.builder().role("ROLE_CUSTOMER").build();
 
             authorityRepository.save(adminAuthority);
             authorityRepository.save(userAuthority);
@@ -40,13 +40,13 @@ public class UserDataLoader implements CommandLineRunner {
 
             final User regularUser = User.builder()
                     .username("user")
-                    .password("password")
+                    .password(passwordEncoder.encode("password"))
                     .authority(userAuthority)
                     .build();
 
             final User scottUser = User.builder()
                     .username("scott")
-                    .password("tiger")
+                    .password(passwordEncoder.encode("tiger"))
                     .authority(customerAuthority)
                     .build();
 

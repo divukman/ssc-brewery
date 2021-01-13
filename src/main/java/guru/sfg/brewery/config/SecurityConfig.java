@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -28,6 +29,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(jsr250Enabled = true, prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public RestHeaderAuthFilter restHeaderAuthFilter(final AuthenticationManager authenticationManager) {
@@ -56,9 +58,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests( authorize -> authorize.antMatchers("/", "/webjars/**", "/login", "/resources/**", "/h2-console/**").permitAll())
                 .authorizeRequests(
                         authorize -> authorize
-                                .antMatchers("/beers/find", "/beers*").permitAll()
-                                .antMatchers(HttpMethod.GET, "/api/v1/beer/**").permitAll()
-                                .mvcMatchers(HttpMethod.GET, "/api/v1/beerUpc/{upc}").permitAll()
+                                .antMatchers("/beers/find", "/beers*").hasAnyRole("USER","CUSTOMER", "ADMIN")
+                                .antMatchers(HttpMethod.GET, "/api/v1/beer/**").hasAnyRole("USER","CUSTOMER", "ADMIN")
+                                .mvcMatchers(HttpMethod.GET, "/api/v1/beerUpc/{upc}").hasAnyRole("USER","CUSTOMER", "ADMIN")
+                                .mvcMatchers(HttpMethod.DELETE, "/api/v1/beer/**").hasRole("ADMIN")
+                                .mvcMatchers("/brewery/breweries/**").hasAnyRole("CUSTOMER", "ADMIN")
+                                .mvcMatchers(HttpMethod.GET,"/brewery/api/v1/breweries/**").hasAnyRole("CUSTOMER", "ADMIN")
                 )
                 .authorizeRequests().anyRequest().authenticated()
                 .and()
