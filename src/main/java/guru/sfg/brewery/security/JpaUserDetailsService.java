@@ -33,7 +33,7 @@ public class JpaUserDetailsService implements UserDetailsService {
                 user.getCredentialsNonExpired(),
                 user.getAccountNonLocked(),
                 user.getAuthorities() != null ? user.getAuthorities().stream().map(authority ->
-                   new SimpleGrantedAuthority(authority.getRole())
+                   new SimpleGrantedAuthority(authority.getPermission())
                 ).collect(Collectors.toSet()) : new HashSet<>());
     }
 }
