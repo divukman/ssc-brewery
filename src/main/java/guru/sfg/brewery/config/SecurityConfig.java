@@ -56,15 +56,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests( authorize -> authorize.antMatchers("/", "/webjars/**", "/login", "/resources/**", "/h2-console/**").permitAll())
-                .authorizeRequests(
+                /*.authorizeRequests(
                         authorize -> authorize
-                                .antMatchers("/beers/find", "/beers*").hasAnyRole("USER","CUSTOMER", "ADMIN")
-                                .antMatchers(HttpMethod.GET, "/api/v1/beer/**").hasAnyRole("USER","CUSTOMER", "ADMIN")
-                                .mvcMatchers(HttpMethod.GET, "/api/v1/beerUpc/{upc}").hasAnyRole("USER","CUSTOMER", "ADMIN")
-                                .mvcMatchers(HttpMethod.DELETE, "/api/v1/beer/**").hasRole("ADMIN")
-                                .mvcMatchers("/brewery/breweries/**").hasAnyRole("CUSTOMER", "ADMIN")
-                                .mvcMatchers(HttpMethod.GET,"/brewery/api/v1/breweries/**").hasAnyRole("CUSTOMER", "ADMIN")
-                )
+                                //.antMatchers("/beers/find", "/beers*").hasAnyRole("USER","CUSTOMER", "ADMIN")
+                                //.antMatchers(HttpMethod.GET, "/api/v1/beer/**").hasAnyRole("USER","CUSTOMER", "ADMIN")
+                                //.mvcMatchers(HttpMethod.GET, "/api/v1/beerUpc/{upc}").hasAnyRole("USER","CUSTOMER", "ADMIN")
+                                //.mvcMatchers(HttpMethod.DELETE, "/api/v1/beer/**").hasRole("ADMIN")
+                                //.mvcMatchers("/brewery/breweries/**").hasAnyRole("CUSTOMER", "ADMIN")
+                                //.mvcMatchers(HttpMethod.GET,"/brewery/api/v1/breweries/**").hasAnyRole("CUSTOMER", "ADMIN")
+                )*/
                 .authorizeRequests().anyRequest().authenticated()
                 .and()
                 .formLogin().and()

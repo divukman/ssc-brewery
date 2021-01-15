@@ -6,6 +6,7 @@ import guru.sfg.brewery.repositories.CustomerRepository;
 import guru.sfg.brewery.services.BeerService;
 import guru.sfg.brewery.services.BreweryService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -66,6 +67,7 @@ public class BeerControllerIT {
 
 
     @Test
+    @Disabled
     void findBeersAnonymous() throws Exception{
         mockMvc
                 //.perform(get("/beers/find").with(httpBasic("user","password")))
@@ -86,7 +88,7 @@ public class BeerControllerIT {
     @Test
     void initCreationForm2() throws Exception {
         mockMvc.perform(get("/beers/new").with(httpBasic("scott", "tiger")))
-                .andExpect(status().isOk())
+                .andExpect(status().isForbidden())
                 .andExpect(MockMvcResultMatchers.view().name("beers/createBeer"))
                 .andExpect(model().attributeExists("beer"));
     }
