@@ -16,8 +16,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+@Deprecated
 @RequiredArgsConstructor
-@Component
+//@Component
 public class UserDataLoader implements CommandLineRunner {
 
     private final RoleRepository roleRepository;
@@ -51,6 +52,17 @@ public class UserDataLoader implements CommandLineRunner {
             final Authority updateBreweryAuthority = authorityRepository.save(Authority.builder().permission("brewery.update").build());
             final Authority deleteBreweryAuthority = authorityRepository.save(Authority.builder().permission("brewery.delete").build());
 
+            // Order Auths
+            final Authority createOrderAuthority = authorityRepository.save(Authority.builder().permission("order.create").build());
+            final Authority readOrderAuthority = authorityRepository.save(Authority.builder().permission("order.read").build());
+            final Authority updateOrderAuthority = authorityRepository.save(Authority.builder().permission("order.update").build());
+            final Authority deleteOrderAuthority = authorityRepository.save(Authority.builder().permission("order.delete").build());
+
+            final Authority createOrderCustomerAuthority = authorityRepository.save(Authority.builder().permission("customer.order.create").build());
+            final Authority readOrderCustomerAuthority = authorityRepository.save(Authority.builder().permission("customer.order.read").build());
+            final Authority updateOrderCustomerAuthority = authorityRepository.save(Authority.builder().permission("customer.order.update").build());
+            final Authority deleteOrderCustomerAuthority = authorityRepository.save(Authority.builder().permission("customer.order.delete").build());
+
             // Roles
             final Role roleAdmin = roleRepository.save(Role.builder().name("ADMIN").build());
             final Role roleCustomer = roleRepository.save(Role.builder().name("CUSTOMER").build());
@@ -59,14 +71,19 @@ public class UserDataLoader implements CommandLineRunner {
             roleAdmin.setAuthorities(
                     new HashSet<>(
                             Set.of(
-                                createBeerAuthority, updateBeerAuthority, readBeerAuthority, deleteBeerAuthority,
-                                createCustomerAuthority, readCustomerAuthority, updateCustomerAuthority, deleteCustomerAuthority,
-                                createBreweryAuthority, readBreweryAuthority, updateBreweryAuthority, deleteBreweryAuthority)
+                                    createBeerAuthority, updateBeerAuthority, readBeerAuthority, deleteBeerAuthority,
+                                    createCustomerAuthority, readCustomerAuthority, updateCustomerAuthority, deleteCustomerAuthority,
+                                    createBreweryAuthority, readBreweryAuthority, updateBreweryAuthority, deleteBreweryAuthority ,
+                                    createOrderAuthority, readOrderAuthority, updateOrderAuthority, deleteOrderAuthority
+                            )
                     )
             );
             roleCustomer.setAuthorities(
                     new HashSet<>(
-                       Set.of(readBeerAuthority, readCustomerAuthority, readBreweryAuthority)
+                       Set.of(
+                               readBeerAuthority, readCustomerAuthority, readBreweryAuthority,
+                               createOrderCustomerAuthority, readOrderCustomerAuthority, updateOrderCustomerAuthority, deleteOrderCustomerAuthority
+                       )
                     )
             );
             roleUser.setAuthorities(

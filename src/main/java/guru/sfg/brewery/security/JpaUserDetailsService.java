@@ -25,7 +25,8 @@ public class JpaUserDetailsService implements UserDetailsService {
 
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User name + " + username + " not found"));
 
-        return new org.springframework.security.core.userdetails.User(
+        return user;
+/*        return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
                 user.getEnabled(),
@@ -34,6 +35,6 @@ public class JpaUserDetailsService implements UserDetailsService {
                 user.getAccountNonLocked(),
                 user.getAuthorities() != null ? user.getAuthorities().stream().map(authority ->
                    new SimpleGrantedAuthority(authority.getPermission())
-                ).collect(Collectors.toSet()) : new HashSet<>());
+                ).collect(Collectors.toSet()) : new HashSet<>());*/
     }
 }
