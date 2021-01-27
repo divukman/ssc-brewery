@@ -2,12 +2,15 @@ package guru.sfg.brewery.domain.security;
 
 import guru.sfg.brewery.domain.Customer;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -44,6 +47,12 @@ public class User implements UserDetails, CredentialsContainer {
     private Customer customer;
 
 
+    @CreationTimestamp
+    @Column(updatable = false)
+    private Timestamp createdDate;
+
+    @UpdateTimestamp
+    private Timestamp lastModifiedDate;
 
     @Transient
     public Set<GrantedAuthority> getAuthorities() {
